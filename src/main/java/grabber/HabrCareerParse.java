@@ -12,12 +12,10 @@ import java.io.IOException;
 public class HabrCareerParse {
     private static final String SOURCE_LINK = "https://career.habr.com";
 
-    private static int page = 1;
-
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer?page=", SOURCE_LINK);
 
     public static void main(String[] args) throws IOException {
-        while (page <= 5) {
+        for (int page = 1; page < 5; page++) {
             Connection connection = Jsoup.connect(String.format("%s%s", PAGE_LINK, page));
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
@@ -30,7 +28,6 @@ public class HabrCareerParse {
                 String date = dateElement.attr("datetime");
                 System.out.printf("%s %s %s%n", vacancyName, date, link);
             });
-            page++;
         }
     }
 }
