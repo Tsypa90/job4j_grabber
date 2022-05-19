@@ -20,6 +20,8 @@ public class HabrCareerParse implements Parse {
 
     private final DateTimeParser dateTimeParser;
 
+    public static final int PAGE = 5;
+
     public HabrCareerParse(DateTimeParser dateTimeParser) {
         this.dateTimeParser = dateTimeParser;
     }
@@ -42,29 +44,28 @@ public class HabrCareerParse implements Parse {
     @Override
     public List<Post> list(String link) {
         List<Post> list = new ArrayList<>();
-         Connection connection = Jsoup.connect(link);
-        try {
-            Document document = connection.get();
-            Elements rows = document.select(".vacancy-card__inner");
-            rows.forEach(row -> {
-                try {
-                    list.add(postParse(row));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        for (int i = 1; i <= PAGE; i++) {
+         Connection connection = Jsoup.connect(String.format("%s%s", link, i));
+             try {
+                 Document document = connection.get();
+                 Elements rows = document.select(".vacancy-card__inner");
+                 rows.forEach(row -> {
+                     try {
+                         list.add(postParse(row));
+                     } catch (IOException e) {
+                         throw new RuntimeException(e);
+                     }
+                 });
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+         }
         return list;
     }
 
     public static void main(String[] args) {
-        List<Post> posts = new ArrayList<>();
-        for (int page = 1; page <= 5; page++) {
-            posts.addAll(new HabrCareerParse(new HarbCareerDateTimeParser())
-                    .list(String.format("%s%s", PAGE_LINK, page)));
-        }
+        List<Post> posts = new HabrCareerParse(new HarbCareerDateTimeParser())
+                .list(PAGE_LINK);
         System.out.println(posts.size());
     }
 }
