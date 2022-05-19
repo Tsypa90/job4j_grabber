@@ -28,40 +28,43 @@ public class HabrCareerParse implements Parse {
         return Jsoup.connect(link).get().selectFirst(".job_show_description__vacancy_description").text();
     }
 
+    public Post postParse(Element element) throws IOException {
+        Element titleElement = element.select(".vacancy-card__title").first();
+        Element linkElement = titleElement.child(0);
+        Element dateElement = element.select(".vacancy-card__date").first().child(0);
+        String vacancyLink = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
+        return new Post(titleElement.text(),
+                vacancyLink,
+                retrieveDescription(vacancyLink),
+                dateTimeParser.parse(dateElement.attr("datetime")));
+    }
+
     @Override
-    public List<Post> list(String link) throws IOException {
+    public List<Post> list(String link) {
         List<Post> list = new ArrayList<>();
-        Connection connection = Jsoup.connect(link);
-        Document document = connection.get();
-        Elements rows = document.select(".vacancy-card__inner");
-        rows.forEach(row -> {
-            Element titleElement = row.select(".vacancy-card__title").first();
-            Element linkElement = titleElement.child(0);
-            Element dateElement = row.select(".vacancy-card__date").first().child(0);
-            String vacancyLink = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-            String date = dateElement.attr("datetime");
-            try {
-                list.add(new Post(
-                        titleElement.text(),
-                        vacancyLink,
-                        retrieveDescription(vacancyLink),
-                        new HabrCareerParse(new HarbCareerDateTimeParser()).dateTimeParser.parse(date)
-                ));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+         Connection connection = Jsoup.connect(link);
+        try {
+            Document document = connection.get();
+            Elements rows = document.select(".vacancy-card__inner");
+            rows.forEach(row -> {
+                try {
+                    list.add(postParse(row));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return list;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         List<Post> posts = new ArrayList<>();
-        for (int page = 1; page <= 1; page++) {
-            posts = new HabrCareerParse(new HarbCareerDateTimeParser())
-                    .list(String.format("%s%s", PAGE_LINK, page));
+        for (int page = 1; page <= 5; page++) {
+            posts.addAll(new HabrCareerParse(new HarbCareerDateTimeParser())
+                    .list(String.format("%s%s", PAGE_LINK, page)));
         }
-        for (Post post : posts) {
-            System.out.println(post.toString());
-        }
+        System.out.println(posts.size());
     }
 }
