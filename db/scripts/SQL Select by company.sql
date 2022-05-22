@@ -50,12 +50,9 @@ from company as c
 join person as p
 on p.company_id = c.id
 group by c.name
-having count(*) = (select persons 
-from (select c.name, count(p.id) as persons
-from company as c
-join person as p
-on p.company_id = c.id
-group by c.name
-order by count(p.id) desc
-limit 1
-)ss)
+having count(*) = (select 
+count(p.company_id) as cc
+from person as p
+group by p.company_id
+order by cc desc
+limit 1);
