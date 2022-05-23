@@ -1,0 +1,54 @@
+Предварительно создал объект User:
+
+public class User {
+    private int age;
+    private String name;
+    private boolean married;
+
+    public User(int age, String name, boolean married) {
+        this.age = age;
+        this.name = name;
+        this.married = married;
+    }
+
+    @Override
+    protected void finalize() {
+        System.out.printf("Removed %d %s%n", age, name);
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+Данный объект предварительно занимает в памяти: 
+1. 12 байт это (заголовок объекта)
+2. Поля:
+	int age = 4 байта
+	Strong name = 2 байта * на длину строки (к примеру "Pavel" = 10 байт)
+	boolean married = 1 байт
+Итого: 27 байт + 5 байт (выравнивание, так как каждый объект Java должен занимать 8N байтов) = 32 байта.
+
+Для того чтобы программа самостоятельно вызывала сборщика мусора необходимо узнать какое фактически пустое место у нас имеется
+в нашем случае это 3 мб
+
+=== Environment state ===
+Free: 3
+Total: 6
+Max: 6
+
+Сотвественно 3 мб = 3000000 байтов делим на размер нашего объекта это 32 байта(с учетом максимальной длины строки 6 символов) это 93750.
+Нам необходимо создать 93750 объектов User для полного заполнения кучи, но по факту сборщик начинает самостоятельно производить оичистку 
+при заполнении Eden, для этого хватит создать и 10000 объектов User.
