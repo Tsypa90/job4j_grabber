@@ -1,5 +1,6 @@
 package cache;
 
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +13,8 @@ public abstract class AbstractCache<K, V> {
     }
 
     public V get(K key) {
-        return cache.get(key).get();
+        return cache.getOrDefault(key, new SoftReference<>(null)).get();
     }
 
-    protected abstract V load(K key);
+    protected abstract V load(K key) throws IOException;
 }
