@@ -12,8 +12,13 @@ public abstract class AbstractCache<K, V> {
         cache.put(key, new SoftReference<>(value));
     }
 
-    public V get(K key) {
-        return cache.getOrDefault(key, new SoftReference<>(null)).get();
+    public V get(K key) throws IOException {
+        var value = cache.getOrDefault(key, new SoftReference<>(null)).get();
+        if (value == null) {
+            value = load(key);
+            put(key, value);
+        }
+        return value;
     }
 
     protected abstract V load(K key) throws IOException;
