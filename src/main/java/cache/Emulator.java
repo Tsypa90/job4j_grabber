@@ -1,41 +1,56 @@
 package cache;
 
+import gc.ConsoleInput;
 import java.io.IOException;
-import java.util.Scanner;
+import java.nio.file.NoSuchFileException;
 
 public class Emulator {
-    private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
-        System.out.print("Укажите директорию к файлу: ");
-        String dir = scanner.next();
+    public static void main(String[] args) throws IOException, NoSuchFileException {
+        ConsoleInput consoleInput = new ConsoleInput();
+        String dir = consoleInput.askStr("Укажите директорию к файлу: ");
         DirFileCache dirFileCache = new DirFileCache(dir);
         while (true) {
-            System.out.printf("Что вы хотите сделать? %n"
+            String question = "Что вы хотите сделать? %n"
                     + "1. загрузить в КЭШ?%n"
                     + "2. достать из КЭША?%n"
-                    + "3. Exit%n");
-            int whatDo = scanner.nextInt();
+                    + "3. Exit%n";
+            int whatDo = validInt(question, consoleInput);
             if (whatDo == 1) {
-                String path = insertFile();
-                dirFileCache.put(path, dirFileCache.load(path));
+                boolean invalid = true;
+                do {
+                    String path = consoleInput.askStr("Укажите имя файла: ");
+                    dirFileCache.put(path, dirFileCache.load(path));
+                    invalid = false;
+                } while (invalid);
                 System.out.println("Файл загружен!");
             } else if (whatDo == 2) {
-                String path = insertFile();
+                String path = consoleInput.askStr("Укажите имя файла: ");
                 if (dirFileCache.get(path) == null) {
                     System.out.println("КЭШ пуст");
                 } else {
                     System.out.println(dirFileCache.load(path));
                 }
-            } else {
+            } else if (whatDo == 3) {
                 System.out.println("Спасибо!");
                 break;
+            } else {
+                System.out.println("Выберите правильный пункт меню!");
             }
         }
     }
 
-    private static String insertFile() {
-        System.out.print("Укажите имя файла: ");
-        return scanner.next();
+    public static int validInt(String question, ConsoleInput consoleInput) {
+        boolean invalid = true;
+        int value = -1;
+        do {
+            try {
+                value = consoleInput.askInt(question);
+                invalid = false;
+            } catch (NumberFormatException ime) {
+                System.out.println("Введите правильное значение!");
+            }
+        } while (invalid);
+        return value;
     }
 }
