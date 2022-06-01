@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class CinemaTest {
 
+    @Test
     @Ignore
     public void whenBuy() {
         Account account = new AccountCinema();
@@ -21,6 +23,7 @@ public class CinemaTest {
         assertThat(ticket, is(new Ticket3D()));
     }
 
+    @Test
     @Ignore
     public void whenFind() {
         Cinema cinema = new Cinema3D();
@@ -29,7 +32,8 @@ public class CinemaTest {
         assertThat(sessions, is(Arrays.asList(new Session3D())));
     }
 
-    @Ignore (expected = IllegalArgumentException.class)
+    @Test (expected = IllegalArgumentException.class)
+    @Ignore
     public void whenByuTicketWithInvalidDate() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -38,7 +42,8 @@ public class CinemaTest {
         Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 
-    @Ignore (expected = IllegalArgumentException.class)
+    @Test (expected = IllegalArgumentException.class)
+    @Ignore
     public void whenByuTicketWithInvalidSeat() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -47,7 +52,8 @@ public class CinemaTest {
         Ticket ticket = cinema.buy(account, -5, 1, date);
     }
 
-    @Ignore (expected = IllegalArgumentException.class)
+    @Test (expected = IllegalArgumentException.class)
+    @Ignore
     public void whenByuTicketThatAlsoExist() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
