@@ -8,7 +8,8 @@ public class GetLogSquareCalculate implements GetLog {
         return Logger.getLogger(className.getClass());
     }
 
-    public void consolePrintLog(Logger log) {
-        System.out.println(log);
+    @Override
+    public void printLog(Logger logger) {
+        System.out.println(logger);
     }
 }
