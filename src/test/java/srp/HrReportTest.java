@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class HrReportTest {
     @Test
-    public void HrGenerated() {
+    public void hrGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee pavel = new Employee("Pavel", now, now, 100);

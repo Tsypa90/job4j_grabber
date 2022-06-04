@@ -1,6 +1,5 @@
 package srp;
 
-import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class HrReport implements Report {
