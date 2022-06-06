@@ -8,12 +8,12 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class AccountingReportTest {
+    private static final int USD = 60;
     @Test
     public void whenAccountingGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
-        int USD = 60;
         store.add(worker);
         Report engine = new AccountingReport(store);
         StringBuilder expect = new StringBuilder()
