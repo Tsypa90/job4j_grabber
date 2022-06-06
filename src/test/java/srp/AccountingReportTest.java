@@ -13,6 +13,7 @@ public class AccountingReportTest {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
+        int USD = 60;
         store.add(worker);
         Report engine = new AccountingReport(store);
         StringBuilder expect = new StringBuilder()
@@ -21,7 +22,7 @@ public class AccountingReportTest {
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")
                 .append(worker.getFired()).append(";")
-                .append(worker.getSalary() * 60).append(";")
+                .append(worker.getSalary() * USD).append(";")
                 .append(System.lineSeparator());
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
