@@ -8,7 +8,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class AccountingReportTest {
-    private static final int USD = 60;
     @Test
     public void whenAccountingGenerated() {
         MemStore store = new MemStore();
@@ -22,7 +21,7 @@ public class AccountingReportTest {
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")
                 .append(worker.getFired()).append(";")
-                .append(worker.getSalary() * USD).append(";")
+                .append(worker.getSalary() * AccountingReport.USD).append(";")
                 .append(System.lineSeparator());
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
