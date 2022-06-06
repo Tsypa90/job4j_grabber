@@ -21,15 +21,13 @@ public class XmlReportTest {
         store.add(worker);
         XmlReport report = new XmlReport(store);
         StringBuilder expected = new StringBuilder();
-        expected.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<employees>\n"
-                + "    <employees>\n"
-                + "        <fired>").append(dateFormat.format(worker.getFired().getTime())).append("</fired>\n")
-                        .append("        <hired>").append(dateFormat.format(worker.getHired().getTime()))
-                        .append("</hired>\n").append("        <name>").append(worker.getName()).append("</name>\n")
-                        .append("        <salary>").append(worker.getSalary()).append("</salary>\n")
-                        .append("    </employees>\n"
-                                + "</employees>\n");
+        expected.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n").append("<employees>\n")
+                .append("    <employees>\n").append("        <fired>")
+                .append(dateFormat.format(worker.getFired().getTime())).append("</fired>\n")
+                .append("        <hired>").append(dateFormat.format(worker.getHired().getTime()))
+                .append("</hired>\n").append("        <name>").append(worker.getName()).append("</name>\n")
+                .append("        <salary>").append(worker.getSalary()).append("</salary>\n")
+                .append("    </employees>\n").append("</employees>\n");
         assertThat(report.generate(em -> true), is(expected.toString()));
     }
 }

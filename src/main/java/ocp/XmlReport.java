@@ -7,7 +7,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class XmlReport implements Report {
@@ -25,7 +24,7 @@ public class XmlReport implements Report {
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             try (StringWriter writer = new StringWriter()) {
-                marshaller.marshal(new Employees(store.findBy(employee -> true)), writer);
+                marshaller.marshal(new Employees(store.findBy(filter)), writer);
                 xml = writer.getBuffer().toString();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -34,14 +33,5 @@ public class XmlReport implements Report {
             e.printStackTrace();
         }
         return xml;
-    }
-
-    public static void main(String[] args) {
-        MemStore memStore = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        memStore.add(worker);
-        Report report = new XmlReport(memStore);
-        System.out.println(report.generate(employee -> true));
     }
 }
