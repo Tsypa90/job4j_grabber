@@ -1,9 +1,9 @@
 package lsp.shop;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Meat extends Food {
-    public Meat(String name, Date expiryDate, Date createDate, int price, double discount) {
+    public Meat(String name, LocalDate expiryDate, LocalDate createDate, int price, double discount) {
         super(name, expiryDate, createDate, price, discount);
     }
 }

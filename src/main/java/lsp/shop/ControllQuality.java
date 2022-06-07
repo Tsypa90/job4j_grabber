@@ -5,27 +5,21 @@ import java.util.List;
 
 public class ControllQuality {
     private final Calendar date = Calendar.getInstance();
-    private final Warehouse warehouse;
-    private final Shop shop;
-    private final Trash trash;
+    private List<Food> foods;
 
-    public ControllQuality(Warehouse warehouse, Shop shop, Trash trash) {
-        this.warehouse = warehouse;
-        this.shop = shop;
-        this.trash = trash;
+    public ControllQuality(List<Food> foods) {
+        this.foods = foods;
     }
 
-    public void control(Food food) {
-            int expiryDays = food.getExpiryDate().getDate() - food.getCreateDate().getDate();
-            int percentage = date.getTime().getDate() - food.getCreateDate().getDate();
-            var percent = (double) percentage / expiryDays;
-            if (percent < 0.25) {
-            warehouse.add(food);
-        } else if (percent >= 0.25 && percent < 1) {
-                food.setPrice();
+    public void control(Warehouse warehouse, Shop shop, Trash trash) {
+        for (Food food : foods) {
+            if (warehouse.accept(food)) {
+                warehouse.add(food);
+            } else if (shop.accept(food)) {
                 shop.add(food);
             } else {
-            trash.add(food);
+                trash.add(food);
+            }
         }
     }
 }

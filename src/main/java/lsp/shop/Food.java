@@ -1,16 +1,16 @@
 package lsp.shop;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Food {
     private final String name;
-    private final Date expiryDate;
-    private final Date createDate;
+    private final LocalDate expiryDate;
+    private final LocalDate createDate;
     private double price;
     private final double discount;
 
-    public Food(String name, Date expiryDate, Date createDate, int price, double discount) {
+
+    public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, double discount) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
@@ -22,11 +22,11 @@ public class Food {
         return name;
     }
 
-    public Date getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    public Date getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
@@ -34,15 +34,22 @@ public class Food {
         return price;
     }
 
-    public void setPrice() {
-        int expiryDays = expiryDate.getDate() - createDate.getDate();
-        int percentage = Calendar.getInstance().getTime().getDate() - createDate.getDate();
-        if ((double) percentage / expiryDays > 0.75) {
-            price = price * (1 - discount);
-        }
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public double getDiscount() {
         return discount;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{"
+                + "name='" + name + '\''
+                + ", expiryDate=" + expiryDate
+        + ", createDate=" + createDate
+                + ", price=" + price
+                + ", discount=" + discount
+                + '}';
     }
 }

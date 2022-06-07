@@ -1,17 +1,29 @@
 package lsp.shop;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Trash implements Store {
     private final List<Food> store = new ArrayList<>();
+    private static final double LIFEPERCENTAGETRASH = 1;
     @Override
     public boolean add(Food food) {
-        return store.add(food);
+        return accept(food) ? store.add(food) : false;
     }
 
     @Override
     public List<Food> getStore() {
-        return store;
+        return new ArrayList<>(store);
+    }
+
+    @Override
+    public boolean accept(Food food) {
+        return getPercentLifeExpired(food) > LIFEPERCENTAGETRASH;
+    }
+
+    @Override
+    public double getPercentLifeExpired(Food food) {
+        return Store.super.getPercentLifeExpired(food);
     }
 }
