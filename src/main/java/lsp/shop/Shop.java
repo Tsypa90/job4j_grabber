@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Shop implements Store {
     private final List<Food> store = new ArrayList<>();
-    private static final double LIFEPERCENTAGEWEARHOUSE = 0.25;
-    private static final double LIFEPERCENTAGESHOP = 0.75;
-    private static final double LIFEPERCENTAGETRASH = 1;
+    private static final double LIFE_PERCENTAGE_WAREHOUSE = 0.25;
+    private static final double LIFE_PERCENTAGE_SHOP = 0.75;
+    private static final double LIFE_PERCENTAGE_TRASH = 1;
     @Override
     public boolean add(Food food) {
         boolean rsl = accept(food);
         if (rsl) {
-            if (getPercentLifeExpired(food) > LIFEPERCENTAGESHOP) {
+            if (getPercentLifeExpired(food) > LIFE_PERCENTAGE_SHOP) {
                 food.setPrice(food.getPrice() * (1 - food.getDiscount()));
                 store.add(food);
             } else {
@@ -29,8 +29,8 @@ public class Shop implements Store {
 
     @Override
     public boolean accept(Food food) {
-        return getPercentLifeExpired(food) >= LIFEPERCENTAGEWEARHOUSE
-                && getPercentLifeExpired(food) <= LIFEPERCENTAGETRASH;
+        return getPercentLifeExpired(food) >= LIFE_PERCENTAGE_WAREHOUSE
+                && getPercentLifeExpired(food) <= LIFE_PERCENTAGE_TRASH;
     }
 
     @Override

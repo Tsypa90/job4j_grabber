@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Warehouse implements Store {
     private final List<Food> store = new ArrayList<>();
-    private static final double LIFEPERCENTAGE = 0.25;
+    private static final double LIFE_PERCENTAGE = 0.25;
 
     @Override
     public boolean add(Food food) {
@@ -20,7 +20,7 @@ public class Warehouse implements Store {
 
     @Override
     public boolean accept(Food food) {
-        return getPercentLifeExpired(food) < LIFEPERCENTAGE;
+        return getPercentLifeExpired(food) < LIFE_PERCENTAGE;
     }
 
     @Override

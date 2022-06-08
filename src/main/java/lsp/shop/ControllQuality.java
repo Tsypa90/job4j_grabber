@@ -1,25 +1,15 @@
 package lsp.shop;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class ControllQuality {
-    private final Calendar date = Calendar.getInstance();
-    private List<Food> foods;
+    private List<Store> stores;
 
-    public ControllQuality(List<Food> foods) {
-        this.foods = foods;
+    public ControllQuality(List<Store> stores) {
+        this.stores = stores;
     }
 
-    public void control(Warehouse warehouse, Shop shop, Trash trash) {
-        for (Food food : foods) {
-            if (warehouse.accept(food)) {
-                warehouse.add(food);
-            } else if (shop.accept(food)) {
-                shop.add(food);
-            } else {
-                trash.add(food);
-            }
-        }
+    public void control(Food food) {
+        stores.forEach(s -> s.add(food));
     }
 }
