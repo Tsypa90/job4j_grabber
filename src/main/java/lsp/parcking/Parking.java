@@ -1,14 +1,21 @@
 package lsp.parcking;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Parking implements ParkingService {
-    private final int parkingSize;
-    private final List<Car> cars = new ArrayList<>();
+    private final List<Car> cars;
 
-    public Parking(int parkingSize) {
-        this.parkingSize = parkingSize;
+    public Parking(int passengerCarParkingSize, int truckParkingSize) {
+        if (truckParkingSize < 2 && passengerCarParkingSize == 0) {
+            throw new IllegalStateException("Parking must have more parking space!");
+        }
+        this.cars = new ArrayList<>(passengerCarParkingSize + truckParkingSize);
+    }
+
+    public List<Car> getCars() {
+        return new ArrayList<>(cars);
     }
 
     @Override
@@ -19,9 +26,5 @@ public class Parking implements ParkingService {
     @Override
     public boolean parkOut(Car car) {
         return false;
-    }
-
-    public List<Car> getCars() {
-        return cars;
     }
 }

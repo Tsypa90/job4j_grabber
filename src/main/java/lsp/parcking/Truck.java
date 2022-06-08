@@ -4,6 +4,9 @@ public class Truck implements Car {
     public final int space;
 
     public Truck(int space) {
+        if (space < 1) {
+            throw new IllegalStateException("It is not truck!");
+        }
         this.space = space;
     }
 

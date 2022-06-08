@@ -9,41 +9,42 @@ import static org.junit.Assert.*;
 public class ParkingTest {
     @Ignore
     @Test
-    public void parkIn() {
-        Parking parking = new Parking(5);
+    public void parkInTrue() {
+        Parking parking = new Parking(2, 3);
         PassengerCar toyotaPrius = new PassengerCar();
-        Truck volvo = new Truck(3);
-        Truck mb = new Truck(3);
-        parking.parkIn(toyotaPrius);
-        parking.parkIn(mb);
-        assertFalse(parking.parkIn(volvo));
+        assertTrue(parking.parkIn(toyotaPrius));
     }
     @Ignore
     @Test
-    public void parkOut() {
-        Parking parking = new Parking(5);
+    public void parkInFalse() {
+        Parking parking = new Parking(1, 2);
+        Car volvoTruck = new Truck(3);
+        assertFalse(parking.parkIn(volvoTruck));
+    }
+    @Ignore
+    @Test
+    public void parkOutTrue() {
+        Parking parking = new Parking(1, 2);
         PassengerCar toyotaPrius = new PassengerCar();
-        Truck mb = new Truck(3);
         parking.parkIn(toyotaPrius);
-        parking.parkIn(mb);
+        assertTrue(parking.parkOut(toyotaPrius));
+    }
+    @Ignore
+    @Test
+    public void parkOutFalse() {
+        Parking parking = new Parking(1, 2);
+        PassengerCar toyotaPrius = new PassengerCar();
+        parking.parkIn(toyotaPrius);
         parking.parkOut(toyotaPrius);
-        int expected = 3;
-        assertThat(parking.getCars().size(), is(expected));
+        assertFalse(parking.parkOut(toyotaPrius));
     }
-
     @Ignore
     @Test
-    public void whenInAndNoSpaceThenOutAndIn() {
-        Parking parking = new Parking(5);
+    public void whenNoSpaceToPark() {
+        Parking parking = new Parking(1, 2);
         PassengerCar toyotaPrius = new PassengerCar();
         PassengerCar nissanCube = new PassengerCar();
-        Truck mb = new Truck(3);
-        Truck volvo = new Truck(2);
         parking.parkIn(toyotaPrius);
-        parking.parkIn(nissanCube);
-        parking.parkIn(mb);
-        parking.parkIn(volvo);
-        parking.parkOut(mb);
-        assertTrue(parking.parkIn(volvo));
+        assertFalse(parking.parkIn(nissanCube));
     }
 }
