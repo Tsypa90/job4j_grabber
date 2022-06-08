@@ -32,9 +32,4 @@ public class Shop implements Store {
         return getPercentLifeExpired(food) >= LIFE_PERCENTAGE_WAREHOUSE
                 && getPercentLifeExpired(food) <= LIFE_PERCENTAGE_TRASH;
     }
-
-    @Override
-    public double getPercentLifeExpired(Food food) {
-        return Store.super.getPercentLifeExpired(food);
-    }
 }

@@ -22,9 +22,4 @@ public class Warehouse implements Store {
     public boolean accept(Food food) {
         return getPercentLifeExpired(food) < LIFE_PERCENTAGE;
     }
-
-    @Override
-    public double getPercentLifeExpired(Food food) {
-        return Store.super.getPercentLifeExpired(food);
-    }
 }
