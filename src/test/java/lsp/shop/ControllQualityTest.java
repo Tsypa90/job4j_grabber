@@ -3,7 +3,6 @@ package lsp.shop;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -57,10 +56,8 @@ public class ControllQualityTest {
         controllQuality.control(milk);
         controllQuality.control(meat);
         controllQuality.control(fruit);
-        List<Food> foods = new ArrayList<>();
-        foods.addAll(warehouse.getStore());
-        foods.addAll(shop.getStore());
-        foods.addAll(trash.getStore());
-        assertThat(foods, is(List.of(milk, meat, fruit)));
+        assertThat(warehouse.getStore(), is(List.of(milk)));
+        assertThat(shop.getStore(), is(List.of(meat)));
+        assertThat(trash.getStore(), is(List.of(fruit)));
     }
 }

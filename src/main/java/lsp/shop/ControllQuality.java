@@ -10,6 +10,10 @@ public class ControllQuality {
     }
 
     public void control(Food food) {
-        stores.forEach(s -> s.add(food));
+        stores.forEach(s -> {
+            if (s.accept(food)) {
+                s.add(food);
+            }
+        });
     }
 }
