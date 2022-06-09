@@ -3,22 +3,47 @@ package lsp.parcking;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class ParkingTest {
     @Ignore
     @Test
-    public void parkInTrue() {
+    public void parkPassengerCarInTrue() {
         Parking parking = new Parking(2, 3);
         PassengerCar toyotaPrius = new PassengerCar();
         assertTrue(parking.parkIn(toyotaPrius));
     }
     @Ignore
     @Test
-    public void parkInFalse() {
-        Parking parking = new Parking(1, 2);
+    public void parkPassengerCarInFalse() {
+        Parking parking = new Parking(0, 3);
+        PassengerCar toyotaPrius = new PassengerCar();
+        assertFalse(parking.parkIn(toyotaPrius));
+    }
+    @Ignore
+    @Test
+    public void parkTruckInTrue() {
+        Parking parking = new Parking(1, 1);
         Car volvoTruck = new Truck(3);
+        assertFalse(parking.parkIn(volvoTruck));
+    }
+    @Ignore
+    @Test
+    public void parkTruckInFalse() {
+        Parking parking = new Parking(1, 0);
+        Car volvoTruck = new Truck(3);
+        assertFalse(parking.parkIn(volvoTruck));
+    }
+    @Ignore
+    @Test
+    public void parkTruckInFalseWhenTruckParkingFullAndNoSpaceOnPassenger() {
+        Parking parking = new Parking(1, 1);
+        Car volvoTruck = new Truck(3);
+        Car mb = new Truck(2);
+        parking.parkIn(mb);
         assertFalse(parking.parkIn(volvoTruck));
     }
     @Ignore
@@ -40,11 +65,12 @@ public class ParkingTest {
     }
     @Ignore
     @Test
-    public void whenNoSpaceToPark() {
+    public void identifyCarList() {
         Parking parking = new Parking(1, 2);
         PassengerCar toyotaPrius = new PassengerCar();
-        PassengerCar nissanCube = new PassengerCar();
+        Car mb = new Truck(2);
         parking.parkIn(toyotaPrius);
-        assertFalse(parking.parkIn(nissanCube));
+        parking.parkIn(mb);
+        assertThat(parking.getCars(), is(List.of(toyotaPrius, mb)));
     }
 }
