@@ -22,13 +22,13 @@ public class Parking implements ParkingService {
     @Override
     public boolean parkIn(Car car) {
         boolean rsl = false;
-        if (car.getSpace() > 1 && truckParkingSize > 0) {
+        if (car.getSpace() > PassengerCar.SPACE && truckParkingSize > 0) {
             rsl = cars.add(car);
             truckParkingSize--;
-        } else if (car.getSpace() > 1 && passengerCarParkingSize >= car.getSpace()) {
+        } else if (car.getSpace() > PassengerCar.SPACE && passengerCarParkingSize >= car.getSpace()) {
             rsl = cars.add(car);
             passengerCarParkingSize = passengerCarParkingSize - car.getSpace();
-        } else if (car.getSpace() == 1 && passengerCarParkingSize > 0) {
+        } else if (car.getSpace() == PassengerCar.SPACE && passengerCarParkingSize > 0) {
             rsl = cars.add(car);
             passengerCarParkingSize--;
         }
@@ -38,10 +38,10 @@ public class Parking implements ParkingService {
     @Override
     public boolean parkOut(Car car) {
         boolean rsl = false;
-        if (cars.contains(car) && car.getSpace() > 1) {
+        if (cars.contains(car) && car.getSpace() > PassengerCar.SPACE) {
             rsl = cars.remove(car);
             truckParkingSize++;
-        } else if (cars.contains(car) && car.getSpace() == 1) {
+        } else if (cars.contains(car) && car.getSpace() == PassengerCar.SPACE) {
             rsl = cars.remove(car);
             passengerCarParkingSize++;
         }
