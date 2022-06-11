@@ -56,46 +56,10 @@ public class ParkingTest {
         assertFalse(parking.parkOut(toyotaPrius));
     }
     @Test
-    public void whenParkOutFalseAndParkingSizeNotChange() {
+    public void whenCarNotParkInAndTryParkOutThenFalse() {
         Parking parking = new Parking(1, 2);
         PassengerCar toyotaPrius = new PassengerCar();
-        parking.parkIn(toyotaPrius);
-        parking.parkOut(toyotaPrius);
-        parking.parkOut(toyotaPrius);
-        assertThat(parking.getPassengerCarParkingSize(), is(1));
-    }
-    @Test
-    public void whenParkInAndTruckParkingSizeChanged() {
-        Parking parking = new Parking(1, 1);
-        Car mb = new Truck(2);
-        parking.parkIn(mb);
-        assertThat(parking.getTruckParkingSize(), is(0));
-    }
-    @Test
-    public void whenTruckParkInToPassengerCarParking() {
-        Parking parking = new Parking(4, 0);
-        Car mb = new Truck(2);
-        PassengerCar toyotaPrius = new PassengerCar();
-        parking.parkIn(toyotaPrius);
-        parking.parkIn(mb);
-        assertThat(parking.getPassengerCarParkingSize(), is(1));
-    }
-    @Test
-    public void whenTruckParkInToPassengerCarParkingAndTruckParkingChanged() {
-        Parking parking = new Parking(4, 0);
-        Car mb = new Truck(2);
-        parking.parkIn(mb);
-        assertThat(mb.getParking(), is("passengerCarParking"));
-    }
-    @Test
-    public void whenTruckParkOutFromPassengerCarParking() {
-        Parking parking = new Parking(4, 0);
-        Car mb = new Truck(2);
-        PassengerCar toyotaPrius = new PassengerCar();
-        parking.parkIn(toyotaPrius);
-        parking.parkIn(mb);
-        parking.parkOut(mb);
-        assertThat(parking.getPassengerCarParkingSize(), is(3));
+        assertFalse(parking.parkOut(toyotaPrius));
     }
     @Test
     public void identifyCarList() {
