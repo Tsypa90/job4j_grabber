@@ -59,11 +59,11 @@ public class SimpleMenuTest {
                         "Сходить в магазин", List.of("Купить продукты"), STUB_ACTION, "1."
                 )));
     }
-    @Test (expected = Exception.class)
-    public void whenSelectNullItem() {
+    @Test
+    public void whenTryAddDuplicate() {
         Menu menu = new SimpleMenu();
         menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
-        menu.select("купить продукты");
+        assertFalse(menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION));
     }
     @Test
     public void whenPrintMenu() {
