@@ -3,7 +3,7 @@ package lsp.shop;
 import java.util.*;
 
 public class Shop implements Store {
-    private final Set<Food> store = new HashSet<>();
+    private final List<Food> store = new ArrayList<>();
     private static final double LIFE_PERCENTAGE_WAREHOUSE = 0.25;
     private static final double LIFE_PERCENTAGE_SHOP = 0.75;
     private static final double LIFE_PERCENTAGE_TRASH = 1;
@@ -24,6 +24,11 @@ public class Shop implements Store {
     @Override
     public List<Food> getStore() {
         return new ArrayList<>(store);
+    }
+
+    @Override
+    public void clear() {
+        store.clear();
     }
 
     @Override

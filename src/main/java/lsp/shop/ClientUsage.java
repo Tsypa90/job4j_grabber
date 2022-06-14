@@ -16,6 +16,7 @@ public class ClientUsage {
         foods.forEach(controllQuality::control);
         while (true) {
             controllQuality.resort();
+            stores.forEach(store -> System.out.println(store.getStore().size()));
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {

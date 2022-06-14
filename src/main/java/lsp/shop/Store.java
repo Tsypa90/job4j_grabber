@@ -8,6 +8,8 @@ public interface Store {
 
     List<Food> getStore();
 
+    void clear();
+
     boolean accept(Food food);
 
     default double getPercentLifeExpired(Food food) {

@@ -3,7 +3,7 @@ package lsp.shop;
 import java.util.*;
 
 public class Trash implements Store {
-    private final Set<Food> store = new HashSet<>();
+    private final List<Food> store = new ArrayList<>();
     private static final double LIFE_PERCENTAGE_TRASH = 1;
     @Override
     public boolean add(Food food) {
@@ -13,6 +13,11 @@ public class Trash implements Store {
     @Override
     public List<Food> getStore() {
         return new ArrayList<>(store);
+    }
+
+    @Override
+    public void clear() {
+        store.clear();
     }
 
     @Override

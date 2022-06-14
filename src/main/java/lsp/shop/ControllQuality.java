@@ -1,5 +1,6 @@
 package lsp.shop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControllQuality {
@@ -10,9 +11,12 @@ public class ControllQuality {
     }
 
     public void resort() {
+        List<Food> temp = new ArrayList<>();
         stores.forEach(store -> {
-            store.getStore().forEach(this::control);
+            temp.addAll(store.getStore());
+            store.clear();
         });
+        temp.forEach(this::control);
     }
 
     public void control(Food food) {
