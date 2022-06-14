@@ -14,5 +14,13 @@ public class ClientUsage {
         List<Store> stores = List.of(new Warehouse(), new Shop(), new Trash());
         ControllQuality controllQuality = new ControllQuality(stores);
         foods.forEach(controllQuality::control);
+        while (true) {
+            controllQuality.resort();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

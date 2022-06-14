@@ -1,11 +1,9 @@
 package lsp.shop;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Warehouse implements Store {
-    private final List<Food> store = new ArrayList<>();
+    private final Set<Food> store = new HashSet<>();
     private static final double LIFE_PERCENTAGE = 0.25;
 
     @Override
