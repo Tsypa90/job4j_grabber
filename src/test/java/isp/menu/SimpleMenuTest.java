@@ -73,9 +73,10 @@ public class SimpleMenuTest {
         menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
         SimpleMenuPrinter printer = new SimpleMenuPrinter();
         printer.print(menu);
-        assertEquals("1.Сходить в магазин\n"
-                + "    1.1.Купить продукты\n"
-                + "        1.1.1.Купить хлеб\n", output.toString());
+        var ln = System.lineSeparator();
+        assertEquals("1.Сходить в магазин" + ln
+                + "    1.1.Купить продукты" + ln
+                + "        1.1.1.Купить хлеб" + ln, output.toString());
     }
     @After
     public void cleanUpStreams() {

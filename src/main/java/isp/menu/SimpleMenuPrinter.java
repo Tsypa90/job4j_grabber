@@ -6,10 +6,7 @@ public class SimpleMenuPrinter implements MenuPrinter {
     @Override
     public void print(Menu menu) {
         menu.forEach(menuItemInfo -> {
-            StringBuilder  indent = new StringBuilder();
-            for (int i = 1; i < menuItemInfo.getNumber().split("\\.").length; i++) {
-                indent.append(SPACE);
-            }
+            String indent = SPACE.repeat(menuItemInfo.getNumber().split("\\.").length - 1);
             System.out.println(indent + menuItemInfo.getNumber() + menuItemInfo.getName());
         });
     }

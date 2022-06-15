@@ -1,21 +1,24 @@
 package isp.menu;
 
 import gc.ConsoleInput;
+import isp.menu.action.*;
+
 import java.util.List;
 
 public class TODOApp {
     private static final ActionDelegate STUB_ACTION = null;
 
-    private static void menuShow(List<ActionApp> actions) {
-        System.out.println("\nПрограмма для построения и вывода списка задач пользователя");
+    private static void menuShow(List<AppAction> actions) {
+        var ln = System.lineSeparator();
+        System.out.println(ln + "Программа для построения и вывода списка задач пользователя");
         System.out.println("Что вы хотите сделать?");
         for (int i = 0; i < actions.size(); i++) {
             System.out.println(i + "." + actions.get(i).getName());
         }
     }
 
-    private static boolean validateInput(int number, List<ActionApp> actionApps) {
-        return number < 0 || number >= actionApps.size();
+    private static boolean validateInput(int number, List<AppAction> appActions) {
+        return number < 0 || number >= appActions.size();
     }
 
     public static void main(String[] args) {

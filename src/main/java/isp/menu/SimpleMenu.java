@@ -9,16 +9,14 @@ public class SimpleMenu implements Menu {
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
         var rsl = false;
         var current = new SimpleMenuItem(childName, actionDelegate);
-            if (Objects.equals(Menu.ROOT, parentName)) {
-                rsl = duplicateCheck(rootElements, current);
-            } else if (findItem(parentName).isPresent()) {
-                rsl = duplicateCheck(findItem(parentName).get().menuItem.getChildren(), current);
+        var parentItem = findItem(parentName);
+        var childItem = findItem(childName);
+            if (Objects.equals(Menu.ROOT, parentName) && childItem.isEmpty()) {
+                rsl = rootElements.add(current);
+            } else if (parentItem.isPresent() && childItem.isEmpty()) {
+                rsl = parentItem.get().menuItem.getChildren().add(current);
             }
         return rsl;
-    }
-
-    private boolean duplicateCheck(List<MenuItem> list, MenuItem menuItem) {
-        return !list.contains(menuItem) ? list.add(menuItem) : false;
     }
 
     @Override
@@ -50,6 +48,7 @@ public class SimpleMenu implements Menu {
              var current = dfsIterator.next();
             if (current.menuItem.getName().equals(name)) {
                 rsl = Optional.of(current);
+                break;
             }
         }
         return rsl;

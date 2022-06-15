@@ -1,6 +1,6 @@
-package isp.menu;
+package isp.menu.action;
 
-public class ExitAction implements ActionApp {
+public class ExitAction implements AppAction {
     public static final String NAME = "Завершить работу.";
 
     @Override

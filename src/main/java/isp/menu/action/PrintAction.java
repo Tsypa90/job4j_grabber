@@ -1,6 +1,9 @@
-package isp.menu;
+package isp.menu.action;
 
-public class PrintAction implements ActionApp {
+import isp.menu.Menu;
+import isp.menu.SimpleMenuPrinter;
+
+public class PrintAction implements AppAction {
     public static final String NAME = "Вывод списка задач.";
     private Menu menu;
 
