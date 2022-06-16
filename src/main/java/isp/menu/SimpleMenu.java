@@ -14,7 +14,7 @@ public class SimpleMenu implements Menu {
                     rsl = rootElements.add(current);
             } else if (itemDuplicate) {
                 var parentItem = findItem(parentName);
-                    rsl = parentItem.get().menuItem.getChildren().add(current);
+                    rsl = parentItem.isPresent() && parentItem.get().menuItem.getChildren().add(current);
             }
         return rsl;
     }
