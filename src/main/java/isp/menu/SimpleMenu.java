@@ -9,16 +9,12 @@ public class SimpleMenu implements Menu {
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
         var rsl = false;
         var current = new SimpleMenuItem(childName, actionDelegate);
-        var parentItem = findItem(parentName);
-        var childItem = findItem(childName);
-            if (Objects.equals(Menu.ROOT, parentName)) {
-                if (childItem.isEmpty()) {
+        var itemDuplicate = findItem(childName).isEmpty();
+            if (Objects.equals(Menu.ROOT, parentName) && itemDuplicate) {
                     rsl = rootElements.add(current);
-                }
-            } else if (parentItem.isPresent()) {
-                if (childItem.isEmpty()) {
+            } else if (itemDuplicate) {
+                var parentItem = findItem(parentName);
                     rsl = parentItem.get().menuItem.getChildren().add(current);
-                }
             }
         return rsl;
     }
