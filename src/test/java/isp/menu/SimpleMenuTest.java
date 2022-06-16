@@ -66,6 +66,13 @@ public class SimpleMenuTest {
         assertFalse(menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION));
     }
     @Test
+    public void whenTryAddDuplicateToChild() {
+        Menu menu = new SimpleMenu();
+        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
+        menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
+        assertFalse(menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION));
+    }
+    @Test
     public void whenPrintMenu() {
         Menu menu = new SimpleMenu();
         menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);

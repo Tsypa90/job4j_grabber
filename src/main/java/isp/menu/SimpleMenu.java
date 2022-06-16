@@ -11,10 +11,14 @@ public class SimpleMenu implements Menu {
         var current = new SimpleMenuItem(childName, actionDelegate);
         var parentItem = findItem(parentName);
         var childItem = findItem(childName);
-            if (Objects.equals(Menu.ROOT, parentName) && childItem.isEmpty()) {
-                rsl = rootElements.add(current);
-            } else if (parentItem.isPresent() && childItem.isEmpty()) {
-                rsl = parentItem.get().menuItem.getChildren().add(current);
+            if (Objects.equals(Menu.ROOT, parentName)) {
+                if (childItem.isEmpty()) {
+                    rsl = rootElements.add(current);
+                }
+            } else if (parentItem.isPresent()) {
+                if (childItem.isEmpty()) {
+                    rsl = parentItem.get().menuItem.getChildren().add(current);
+                }
             }
         return rsl;
     }
